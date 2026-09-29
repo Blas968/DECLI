@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi página</title>
+</head>
+
+<body>
+    <h1 id="titulo">Modificar título de la página</h1>
+
+    <button type="button" onclick="modificarTitulo('Nuevo título de la página')">
+        Cambiar título
+    </button>
+
+    <script>
+        function modificarTitulo(nuevoTitulo) {
+            document.getElementById("titulo").textContent = nuevoTitulo;
+        }
+    </script>
+</body>
+</html>

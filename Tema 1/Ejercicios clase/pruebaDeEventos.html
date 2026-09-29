@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos de salida en JavaScript</title>
+</head>
+<body>
+
+    <h1>Prueba de Métodos de salida en JavaScript</h1>
+    <p id="contenido">Contenido previo</p>
+
+    <button type="button" onclick="alert('¡Hola, mundo!')">
+        1. Ventana alerta
+    </button>
+
+    <button type="button" onclick="console.log('Mensaje en consola')">
+        2. Mensaje en consola
+    </button>
+
+    <button type="button" onclick="document.write('Mensaje en documento')">
+        3. Mensaje en documento
+    </button>
+
+    <button type="button" onclick="modificadorDOM('Nuevo contenido')">
+        4. Modificador DOM
+    </button>
+
+    <script>
+        function modificadorDOM(mensaje) {
+            document.getElementById("contenido").textContent = mensaje;
+        }
+    </script>
+
+</body>
+</html>
