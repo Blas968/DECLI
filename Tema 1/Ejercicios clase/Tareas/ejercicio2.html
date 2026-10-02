@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 2</title>
+</head>
+<body>
+  <h1>Secuencia de imágenes</h1>
+  <p>Haz clic sobre la imagen para ver la siguiente.</p>
+
+  <img id="imagen" src="https://picsum.photos/id/10/400/250" onclick="siguiente()">
+
+  <script>
+    var imagenes = [
+      "https://picsum.photos/id/10/400/250",
+      "https://picsum.photos/id/20/400/250",
+      "https://picsum.photos/id/30/400/250",
+      "https://picsum.photos/id/40/400/250"
+    ];
+    var posicion = 0;
+
+    function siguiente() {
+      posicion = posicion + 1;
+      if (posicion == imagenes.length) {
+        posicion = 0;
+      }
+      document.getElementById("imagen").src = imagenes[posicion];
+    }
+  </script>
+</body>
+</html>

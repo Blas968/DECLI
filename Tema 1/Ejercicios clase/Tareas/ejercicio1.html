@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 1</title>
+</head>
+<body>
+  <h1 id="titulo">Título original</h1>
+  <p id="texto">Texto original</p>
+
+  <!-- Botón del ejemplo: cambia el párrafo -->
+  <button onclick="cambiarTexto()">Cambiar texto</button>
+
+  <!-- Segundo botón: cambia el título -->
+  <button onclick="cambiarTitulo()">Cambiar título</button>
+
+  <script>
+    function cambiarTexto() {
+      document.getElementById("texto").innerHTML = "Texto modificado";
+    }
+
+    function cambiarTitulo() {
+      document.getElementById("titulo").innerHTML = "Modificando el contenido";
+    }
+  </script>
+</body>
+</html>

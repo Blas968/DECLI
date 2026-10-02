@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 5</title>
+</head>
+<body>
+  <h1>Mensajes de bienvenida</h1>
+
+  <button onclick="ruso()">Ruso</button>
+  <button onclick="espanol()">Español</button>
+  <button onclick="ingles()">Inglés</button>
+
+  <p id="mensaje"></p>
+
+  <script>
+    function ruso() {
+      document.getElementById("mensaje").innerHTML = "Добро пожаловать";
+      document.getElementById("mensaje").style.color = "red";
+    }
+
+    function espanol() {
+      document.getElementById("mensaje").innerHTML = "Bienvenido";
+      document.getElementById("mensaje").style.color = "green";
+    }
+
+    function ingles() {
+      document.getElementById("mensaje").innerHTML = "Welcome";
+      document.getElementById("mensaje").style.color = "blue";
+    }
+  </script>
+</body>
+</html>
