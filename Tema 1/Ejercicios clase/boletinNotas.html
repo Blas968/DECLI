@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boletín de Notas</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <h1>Boletín de Notas de la clase</h1>
+
+    <div class="blanco">
+        <h2>Notas por trimestre</h2>
+        <table border="1">
+            <tr>
+                <th>Alumno</th>
+                <th>Trimestre 1</th>
+                <th>Trimestre 2</th>
+                <th>Trimestre 3</th>
+                <th>Media</th>
+                <th>Clasificación</th>
+            </tr>
+
+            <tr>
+                <td>Juan Pérez</td>
+                <td class="nota">8.5</td>
+                <td class="nota">9.0</td>
+                <td class="nota">7.5</td>
+                <td class="nota">8.3</td>
+                <td>Aprobado</td>
+            </tr>
+            <tr>
+                <td>María López</td>
+                <td class="nota">7.0</td>
+                <td class="nota">6.5</td>
+                <td class="nota">8.0</td>
+                <td class="nota">7.2</td>
+                <td>Aprobado</td>
+            </tr>
+            <tr>
+                <td>Carlos García</td>
+                <td class="nota">5.5</td>
+                <td class="nota">6.0</td>
+                <td class="nota">4.5</td>
+                <td class="nota">5.3</td>
+                <td>Suspenso</td>
+            </tr>
+            <tr>
+                <td>Ana Martínez</td>
+                <td class="nota">9.0</td>
+                <td class="nota">8.5</td>
+                <td class="nota">9.5</td>
+                <td class="nota">9.0</td>
+                <td>Aprobado</td>
+            </tr>
+            <tr>
+                <td>Pedro Sánchez</td>
+                <td class="nota">6.0</td>
+                <td class="nota">5.5</td>
+                <td class="nota">7.0</td>
+                <td class="nota">6.2</td>
+                <td>Aprobado</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="blanco">
+        <h2>Añadir Alumno</h2>
+        <form action="añadirAlumno" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="trimestre1">Trimestre 1:</label>
+            <input type="number" id="trimestre1" name="trimestre1" min="0" max="10" step="0.1" required>
+            <label for="trimestre2">Trimestre 2:</label>
+            <input type="number" id="trimestre2" name="trimestre2" min="0" max="10" step="0.1" required>
+            <label for="trimestre3">Trimestre 3:</label>
+            <input type="number" id="trimestre3" name="trimestre3" min="0" max="10" step="0.1" required>
+            <button type="submit">Añadir</button>
+        </form>
+    </div>
+</body>
+    <script src="script.js"></script>
+</html>

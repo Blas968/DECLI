@@ -1,0 +1,28 @@
+.blanco {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    margin: 20px auto;
+    background-color: #ffffff;
+    max-width: 800px;
+    border-radius: 10px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f4;
+    margin: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #dfeaf5;
+    color: black;
+}
