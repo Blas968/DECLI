@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boletín de notas - Notas</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    background: #f1f5f9;
+    color: #0f172a;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  h1 { text-align: center; }
+  .panel {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  input { padding: 6px; font-size: 15px; border: 1px solid #94a3b8; border-radius: 6px; }
+  input[type="number"] { width: 60px; }
+  button {
+    padding: 7px 12px;
+    margin: 4px 2px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    background: #1d4ed8;
+    color: white;
+  }
+  button:hover { background: #1e40af; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: center; }
+  th { background: #e2e8f0; }
+  .suspenso { background: #fee2e2; color: #991b1b; }
+  .aprobado { background: #dcfce7; color: #166534; }
+  #mensaje { font-weight: bold; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>Boletín de notas de la clase</h1>
+
+<!-- Tabla de notas (se dibuja desde JavaScript) -->
+<div class="panel">
+  <h2>Notas por trimestre</h2>
+  <div id="tabla"></div>
+</div>
+
+<!-- Añadir alumno -->
+<div class="panel">
+  <h2>Añadir alumno</h2>
+  Nombre: <input type="text" id="nuevoNombre">
+  1T: <input type="number" id="n1" min="0" max="10">
+  2T: <input type="number" id="n2" min="0" max="10">
+  3T: <input type="number" id="n3" min="0" max="10">
+  <button onclick="anadirAlumno()">Añadir</button>
+  <div id="mensaje"></div>
+</div>
+
+<script>
+  // ===== DATOS =====
+  // Los datos están escritos aquí mismo. Si añades un alumno y recargas
+  // la página, vuelve a empezar con estos cinco: no se guarda nada.
+
+  // Array de una dimensión: los nombres
+  let alumnos = ["Ana", "Luis", "Marta", "Pablo", "Sara"];
+
+  // Array bidimensional: una fila por alumno, una columna por trimestre.
+  // La fila 0 son las notas de Ana, la fila 1 las de Luis, etc.
+  let notas = [
+    [7, 8, 9],
+    [4, 5, 6],
+    [3, 4, 2],
+    [9, 10, 9],
+    [5, 4, 6]
+  ];
+
+  // ===== FUNCIONES DE CÁLCULO =====
+
+  // Patrón ACUMULAR: recorre una fila y devuelve la media del alumno
+  function mediaAlumno(fila) {
+    let suma = 0;
+    for (let c = 0; c < notas[fila].length; c++) {
+      suma = suma + notas[fila][c];
+    }
+    return suma / notas[fila].length;
+  }
+
+  // if / else if / else: convierte una nota numérica en texto
+  function calificacion(nota) {
+    if (nota < 5) {
+      return "Insuficiente";
+    } else if (nota < 6) {
+      return "Suficiente";
+    } else if (nota < 7) {
+      return "Bien";
+    } else if (nota < 9) {
+      return "Notable";
+    } else {
+      return "Sobresaliente";
+    }
+  }
+
+  // ===== DIBUJAR LA TABLA =====
+
+  // Dos bucles anidados: uno para las filas (alumnos) y otro para las columnas (trimestres)
+  function pintarTabla() {
+    let html = "<table>";
+    html = html + "<tr><th>Alumno</th><th>1T</th><th>2T</th><th>3T</th><th>Media</th><th>Calificación</th></tr>";
+
+    for (let f = 0; f < notas.length; f++) {
+      html = html + "<tr>";
+      html = html + "<td>" + alumnos[f] + "</td>";
+
+      for (let c = 0; c < notas[f].length; c++) {
+        let nota = notas[f][c];
+        // Condicional: cada celda se colorea según esté aprobada o no
+        if (nota >= 5) {
+          html = html + "<td class='aprobado'>" + nota + "</td>";
+        } else {
+          html = html + "<td class='suspenso'>" + nota + "</td>";
+        }
+      }
+
+      let media = mediaAlumno(f);
+      html = html + "<td><b>" + media.toFixed(2) + "</b></td>";
+      html = html + "<td>" + calificacion(media) + "</td>";
+      html = html + "</tr>";
+    }
+
+    html = html + "</table>";
+    document.getElementById("tabla").innerHTML = html;
+  }
+
+  // ===== AÑADIR ALUMNO =====
+
+  function anadirAlumno() {
+    let nombre = document.getElementById("nuevoNombre").value;
+    let n1 = Number(document.getElementById("n1").value);
+    let n2 = Number(document.getElementById("n2").value);
+    let n3 = Number(document.getElementById("n3").value);
+
+    // Validación con operadores lógicos
+    if (nombre === "") {
+      document.getElementById("mensaje").innerHTML = "Error: escribe un nombre.";
+      return;
+    }
+    if (n1 < 0 || n1 > 10 || n2 < 0 || n2 > 10 || n3 < 0 || n3 > 10) {
+      document.getElementById("mensaje").innerHTML = "Error: las notas deben estar entre 0 y 10.";
+      return;
+    }
+
+    // push() en los dos arrays: el nombre y su fila quedan en la misma posición
+    alumnos.push(nombre);
+    notas.push([n1, n2, n3]);
+    document.getElementById("mensaje").innerHTML = "Añadido " + nombre + ". Ahora hay " + alumnos.length + " alumnos.";
+    pintarTabla();
+  }
+
+  // Al cargar la página, dibujamos la tabla
+  pintarTabla();
+</script>
+
+</body>
+</html>
