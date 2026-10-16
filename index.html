@@ -186,18 +186,26 @@ const REPO_URL = "https://github.com/" + CFG.owner + "/" + CFG.repo;
 const BLOB     = REPO_URL + "/blob/" + BRANCH + "/";
 const CLAVE    = "decli:" + CFG.owner + "/" + CFG.repo + ":";
 
-/* Lista guardada: se usa solo si no se puede consultar GitHub. */
+/* Lista guardada: último recurso si no se puede leer ni indice.json ni GitHub. */
 const RESPALDO = [
-  ["Tema 1/Ejercicios clase/ejemplo.html","Escribir en la página","Calcula 50 + 17 y lo escribe dentro de un párrafo con innerHTML.",["innerHTML"]],
-  ["Tema 1/Ejercicios clase/ejemplo7.1.html","Cambiar un texto con un botón","Un botón sustituye el contenido de un párrafo al pulsarlo.",["onclick","innerHTML"]],
-  ["Tema 1/Ejercicios clase/ejemplo7.2.html","Cambio de imágenes","Al hacer clic en la imagen se alterna entre dos fotos distintas.",["onclick","img.src"]],
-  ["Tema 1/Ejercicios clase/modificarTitulo.html","Modificar el título","Una función recibe el nuevo texto y lo aplica al título de la página.",["funciones","textContent"]],
-  ["Tema 1/Ejercicios clase/pruebaDeEventos.html","Métodos de salida","Compara alert, console.log, document.write y la modificación del DOM.",["alert","console.log","document.write"]],
-  ["Tema 1/Tareas/ejercicio1.html","Ejercicio 1: texto y título","Dos botones cambian por separado el párrafo y el título.",["innerHTML","funciones"]],
-  ["Tema 1/Tareas/ejercicio2.html","Ejercicio 2: secuencia de imágenes","Cada clic muestra la siguiente imagen de una lista y vuelve a la primera al terminar.",["arrays","onclick"]],
-  ["Tema 1/Tareas/ejercicio3.html","Ejercicio 3: test de JavaScript","Siete frases de verdadero o falso; se pintan de verde si aciertas y de rojo si fallas.",["condicionales","style"]],
-  ["Tema 1/Tareas/ejercicio4.html","Ejercicio 4: mensaje por consola","Un botón escribe un mensaje en la consola del navegador (F12).",["console.log"]],
-  ["Tema 1/Tareas/ejercicio5.html","Ejercicio 5: mensajes de bienvenida","Muestra el saludo en ruso, español o inglés, cada uno con su color.",["funciones","style"]]
+  ["Tema 1/Ejercicios clase/boletinNotas.html","Boletín de Notas","Práctica en HTML.",[]],
+  ["Tema 1/Ejercicios clase/ejemplo.html","Ejemplo","Práctica con innerHTML.",["innerHTML"]],
+  ["Tema 1/Ejercicios clase/ejemplo7.1.html","Modificando el código HTML","Modificando el contenido.",["innerHTML", "onclick"]],
+  ["Tema 1/Ejercicios clase/ejemplo7.2.html","Cambio de imágenes con JavaScript","Haz click sobre la imagen para cambiarla.",["onclick", "condicionales", "funciones", "img.src"]],
+  ["Tema 1/Ejercicios clase/modificarTitulo.html","Modificar título de la página","Práctica con textContent, onclick, funciones.",["textContent", "onclick", "funciones"]],
+  ["Tema 1/Ejercicios clase/notas-simple.html","Boletín de notas de la clase","Práctica con innerHTML, onclick, arrays, condicionales.",["innerHTML", "onclick", "arrays", "condicionales"]],
+  ["Tema 1/Ejercicios clase/pruebaDeEventos.html","Métodos de salida en JavaScript","Práctica con textContent, onclick, console.log, alert.",["textContent", "onclick", "console.log", "alert"]],
+  ["Tema 1/Tareas/ActividadPropuesta2.1.html","Actividad Propuesta2.1","Práctica con condicionales, funciones.",["condicionales", "funciones"]],
+  ["Tema 1/Tareas/ActividadPropuesta2.2.html","Actividad Propuesta2.2","Práctica con onclick, console.log.",["onclick", "console.log"]],
+  ["Tema 1/Tareas/EjerciciosResueltos1.html","Ejercicios Resueltos1","Práctica con funciones.",["funciones"]],
+  ["Tema 1/Tareas/EjerciciosResueltos2.html","Ejercicios Resueltos2","Práctica con prompt.",["prompt"]],
+  ["Tema 1/Tareas/EjerciciosResueltos3.html","Ejercicios Resueltos3","Práctica con console.log.",["console.log"]],
+  ["Tema 1/Tareas/ejemplo_evento_atributo.html","Tema 2 - Eventos con 'on...'","Práctica con textContent, onclick, eventos, console.log.",["textContent", "onclick", "eventos", "console.log"]],
+  ["Tema 1/Tareas/ejercicio1.html","Ejercicio 1: Título original","Práctica con innerHTML, onclick, funciones.",["innerHTML", "onclick", "funciones"]],
+  ["Tema 1/Tareas/ejercicio2.html","Ejercicio 2: Secuencia de imágenes","Haz clic sobre la imagen para ver la siguiente.",["onclick", "arrays", "condicionales", "funciones"]],
+  ["Tema 1/Tareas/ejercicio3.html","Ejercicio 3: Test de JavaScript","Práctica con onclick, condicionales, funciones, style.",["onclick", "condicionales", "funciones", "style"]],
+  ["Tema 1/Tareas/ejercicio4.html","Ejercicio 4: Mensaje por consola","Abre la consola con F12 para ver el mensaje.",["onclick", "console.log", "funciones"]],
+  ["Tema 1/Tareas/ejercicio5.html","Ejercicio 5: Mensajes de bienvenida","Práctica con innerHTML, onclick, funciones, style.",["innerHTML", "onclick", "funciones", "style"]]
 ];
 
 /* ---------- Utilidades ---------- */
@@ -219,7 +227,7 @@ const fecha = iso => new Date(iso).toLocaleDateString("es-ES", { day: "numeric",
 /* ---------- Lectura del repositorio ---------- */
 async function cargarRepo(){
   const c = SS.get("arbol");
-  if (c && Date.now() - c.t < 180000) return c;               // 3 min de caché para no gastar peticiones
+  if (c && Date.now() - c.t < 60000) return c;                // 1 min de caché para no gastar peticiones
   const h = { headers: { Accept: "application/vnd.github+json" } };
   const r = await fetch(API + "/git/trees/" + encodeURIComponent(BRANCH) + "?recursive=1", h);
   if (!r.ok) throw new Error("GitHub " + r.status);
@@ -232,6 +240,15 @@ async function cargarRepo(){
   const out = { t: Date.now(), ultimo, tree: j.tree.filter(n => n.type === "blob").map(n => ({ path: n.path, sha: n.sha })) };
   SS.set("arbol", out);
   return out;
+}
+
+/* indice.json lo genera el workflow de GitHub en cada publicación (sin límites de consultas). */
+async function cargarIndice(){
+  const r = await fetch("indice.json", { cache: "no-store" });
+  if (!r.ok) throw new Error("indice.json " + r.status);
+  const j = await r.json();
+  if (!j || !Array.isArray(j.practicas)) throw new Error("indice.json no válido");
+  return j;
 }
 
 async function leer(path){
@@ -253,19 +270,30 @@ const DETECTAR = [
 ];
 const GENERICO = /^(document|mi p[aá]gina|untitled|sin t[ií]tulo|prueba)?$/i;
 
+const palabras = x => new Set((x.toLowerCase().match(/\w+/g) || []).filter(w => w.length > 2));
+function parecidos(a, b){
+  const pa = palabras(a), pb = palabras(b);
+  if (!pa.size || !pb.size) return false;
+  let comun = 0; pa.forEach(w => { if (pb.has(w)) comun++; });
+  return comun / Math.min(pa.size, pb.size) >= 0.5;
+}
+
 function analizar(texto, file){
   const doc = new DOMParser().parseFromString(texto, "text/html");
   const t = (doc.title || "").trim();
   const h = ((doc.querySelector("h1") || {}).textContent || "").trim();
   const md = ((doc.querySelector('meta[name="description"]') || {}).content || "").trim();
-  const tags = DETECTAR.filter(([, re]) => re.test(texto)).map(([n]) => n).slice(0, 4);
+  let codigo = Array.from(doc.scripts).map(x => x.textContent).join("\n");
+  doc.querySelectorAll("*").forEach(n => Array.from(n.attributes).forEach(a => { if (/^on/i.test(a.name)) codigo += "\n" + a.name + "=" + a.value; }));
+  const tags = DETECTAR.filter(([, re]) => re.test(codigo)).map(([n]) => n).slice(0, 4);
 
   let nombre;
   if (GENERICO.test(t)) nombre = h || bonito(file);
-  else if (h && !t.toLowerCase().includes(h.toLowerCase()) && !h.toLowerCase().includes(t.toLowerCase())) nombre = t + ": " + h;
-  else nombre = t;
+  else if (!h || h.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(h.toLowerCase())) nombre = t;
+  else if (parecidos(t, h)) nombre = h;
+  else nombre = t + ": " + h;
 
-  const p = Array.from(doc.querySelectorAll("p")).map(x => x.textContent.trim()).find(x => x.length > 12 && !/^\d+[.)]/.test(x));
+  const p = Array.from(doc.querySelectorAll("p")).map(x => x.textContent.trim().replace(/\s+/g, " ")).find(x => x.length > 24 && !/^\d+[.)]/.test(x));
   const desc = md || p || (tags.length ? "Práctica con " + tags.join(", ") + "." : "Práctica en HTML.");
   return { nombre, desc, tags };
 }
@@ -390,21 +418,34 @@ async function iniciar(){
   document.querySelectorAll("[data-repo]").forEach(a => { a.href = REPO_URL; });
   document.querySelectorAll("[data-repo-text]").forEach(a => { a.textContent = "github.com/" + CFG.owner + "/" + CFG.repo; });
   const estado = $("#estado");
+  const sufijo = f => f ? " Última actualización: " + fecha(f) + "." : "";
+  let motivo = "";
+
+  // 1) Índice generado al publicar la web
   try {
-    const repo = await cargarRepo();
-    const nodos = repo.tree
-      .filter(n => /\.html?$/i.test(n.path) && !/^index\.html?$/i.test(n.path) && !n.path.split("/").some(s => s.startsWith(".")))
-      .slice(0, 200);
-    LISTA = nodos.map(n => entradaDe(n.path, n.sha));
-    await Promise.all(LISTA.map(async e => {
-      try { Object.assign(e, await metaDe(e)); }
-      catch (_) { Object.assign(e, { nombre: bonito(e.file), desc: "Práctica en HTML.", tags: [] }); }
-    }));
-    estado.textContent = "Esta lista se genera sola a partir del repositorio" + (repo.ultimo ? ". Último cambio: " + fecha(repo.ultimo) + "." : ".");
-  } catch (err) {
-    LISTA = RESPALDO.map(([path, nombre, desc, tags]) => Object.assign(entradaDe(path, ""), { nombre, desc, tags }));
-    estado.textContent = "No se pudo consultar GitHub, así que se muestra la lista guardada en la página. Los ejercicios nuevos aparecerán cuando la consulta funcione.";
-    estado.classList.add("aviso");
+    const j = await cargarIndice();
+    LISTA = j.practicas.map(p => Object.assign(entradaDe(p.path, ""), { nombre: p.nombre, desc: p.desc, tags: p.tags || [] }));
+    estado.textContent = "Esta lista se genera sola cada vez que subes cambios al repositorio." + sufijo(j.ultimo);
+  } catch (e1) {
+    // 2) Consulta directa a GitHub (puede fallar por el límite de peticiones de la red)
+    try {
+      const repo = await cargarRepo();
+      const nodos = repo.tree
+        .filter(n => /\.html?$/i.test(n.path) && !/^index\.html?$/i.test(n.path) && !n.path.split("/").some(s => s.startsWith(".")))
+        .slice(0, 200);
+      LISTA = nodos.map(n => entradaDe(n.path, n.sha));
+      await Promise.all(LISTA.map(async e => {
+        try { Object.assign(e, await metaDe(e)); }
+        catch (_) { Object.assign(e, { nombre: bonito(e.file), desc: "Práctica en HTML.", tags: [] }); }
+      }));
+      estado.textContent = "Lista leída directamente de GitHub." + sufijo(repo.ultimo);
+    } catch (e2) {
+      // 3) Lista guardada en la propia página
+      motivo = /403|429/.test(e2.message) ? "GitHub limita las consultas desde esta red" : (e2.message || "sin conexión");
+      LISTA = RESPALDO.map(([path, nombre, desc, tags]) => Object.assign(entradaDe(path, ""), { nombre, desc, tags }));
+      estado.textContent = "Se muestra la lista guardada en la página, que puede estar desactualizada (" + motivo + "). Los ejercicios nuevos aparecerán cuando se publique la web con el workflow.";
+      estado.classList.add("aviso");
+    }
   }
   chips(); pintar();
 }
