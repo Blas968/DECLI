@@ -58,7 +58,8 @@ a{color:inherit}
 /* Índice */
 .index{padding:24px 0 80px}
 .index h2{font:800 clamp(1.8rem,3.4vw,2.6rem)/1.1 var(--sans);letter-spacing:-.025em;margin:0 0 8px}
-.index .sub{color:var(--mute);margin:0 0 28px;max-width:60ch}
+.estado{color:var(--mute);margin:0 0 28px;max-width:70ch;font-size:.95rem}
+.estado.aviso{color:var(--ink);border-left:4px solid var(--yellow);padding-left:12px}
 .tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:32px}
 .search{flex:1 1 240px;max-width:360px;padding:12px 16px;border-radius:10px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font:400 1rem var(--sans)}
 .search:focus{border-color:var(--blue)}
@@ -66,10 +67,11 @@ a{color:inherit}
 .chip{padding:9px 16px;border-radius:999px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font:600 .92rem var(--sans);cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .count{margin-left:auto;color:var(--mute);font:400 .85rem var(--mono)}
-.group{margin-bottom:44px}
-.group h3{font:800 1.3rem var(--sans);margin:0 0 4px;display:flex;align-items:baseline;gap:12px}
-.group h3 small{font:400 .82rem var(--mono);color:var(--mute)}
-.rows{list-style:none;margin:14px 0 0;padding:0;border-top:2px solid var(--ink)}
+.group{margin-bottom:48px}
+.group h3{font:800 1.45rem var(--sans);letter-spacing:-.015em;margin:0;display:flex;align-items:baseline;gap:12px}
+.group h3 small{font:400 .82rem var(--mono);color:var(--mute);letter-spacing:0}
+.group h4{font:600 1rem var(--sans);color:var(--mute);margin:20px 0 0}
+.rows{list-style:none;margin:8px 0 0;padding:0;border-top:2px solid var(--ink)}
 .row{display:grid;grid-template-columns:1fr auto;gap:10px 28px;align-items:center;padding:20px 4px;border-bottom:1px solid var(--line)}
 .row .file{font:400 .8rem var(--mono);color:var(--mute)}
 .row .name{font:600 1.15rem var(--sans);margin:2px 0 4px}
@@ -80,7 +82,7 @@ a{color:inherit}
 .acts .btn{padding:9px 16px;font-size:.92rem;border-width:2px}
 .acts a.code{font:600 .92rem var(--sans);text-decoration:none;border-bottom:2px solid var(--line);padding:2px 0}
 .acts a.code:hover{border-color:var(--blue)}
-.empty{padding:40px 0;color:var(--mute)}
+.empty{padding:40px 0;color:var(--mute);max-width:60ch}
 
 /* Visor */
 dialog{width:min(980px,94vw);height:min(720px,88vh);padding:0;border:2px solid var(--ink);border-radius:16px;background:var(--paper);color:var(--ink);overflow:hidden}
@@ -112,8 +114,8 @@ footer a{color:var(--ink);font-weight:600}
 <body>
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="#">DECLI<span>Tema 1</span></a>
-    <a class="gh" href="https://github.com/Blas968/DECLI" target="_blank" rel="noopener">Ver en GitHub</a>
+    <a class="brand" href="#">DECLI<span>entorno cliente</span></a>
+    <a class="gh" data-repo href="https://github.com/Blas968/DECLI" target="_blank" rel="noopener">Ver en GitHub</a>
   </header>
 
   <section class="hero">
@@ -122,7 +124,7 @@ footer a{color:var(--ink);font-weight:600}
       <p class="lead">Mis prácticas de JavaScript y DOM. Abre cada ejercicio, pruébalo en vivo y mira el código que lo hace funcionar.</p>
       <div class="cta">
         <a class="btn main" href="#practicas">Ver las prácticas</a>
-        <a class="btn" href="https://github.com/Blas968/DECLI" target="_blank" rel="noopener">Repositorio</a>
+        <a class="btn" data-repo href="https://github.com/Blas968/DECLI" target="_blank" rel="noopener">Repositorio</a>
       </div>
     </div>
     <div class="demo" role="region" aria-label="Demostración interactiva">
@@ -138,15 +140,11 @@ footer a{color:var(--ink);font-weight:600}
   </section>
 
   <main class="index" id="practicas">
-    <h2>Prácticas del Tema 1</h2>
-    <p class="sub">Introducción a JavaScript en el navegador: modificar el contenido de la página, responder a eventos y mostrar mensajes.</p>
+    <h2>Prácticas</h2>
+    <p class="estado" id="estado" role="status">Buscando prácticas en el repositorio…</p>
     <div class="tools">
       <input class="search" id="q" type="search" placeholder="Buscar por nombre o tema" aria-label="Buscar prácticas">
-      <div class="chips" id="chips">
-        <button class="chip" type="button" data-f="todo" aria-pressed="true">Todo</button>
-        <button class="chip" type="button" data-f="clase" aria-pressed="false">Ejercicios de clase</button>
-        <button class="chip" type="button" data-f="tareas" aria-pressed="false">Tareas</button>
-      </div>
+      <div class="chips" id="chips"></div>
       <span class="count" id="count" aria-live="polite"></span>
     </div>
     <div id="lista"></div>
@@ -154,7 +152,7 @@ footer a{color:var(--ink);font-weight:600}
 
   <footer>
     <span>Prácticas de DECLI por Adrián Blas.</span>
-    <a href="https://github.com/Blas968/DECLI" target="_blank" rel="noopener">github.com/Blas968/DECLI</a>
+    <a data-repo data-repo-text href="https://github.com/Blas968/DECLI" target="_blank" rel="noopener">github.com/Blas968/DECLI</a>
   </footer>
 </div>
 
@@ -174,83 +172,194 @@ footer a{color:var(--ink);font-weight:600}
 </dialog>
 
 <script>
-const REPO = "https://github.com/Blas968/DECLI/blob/main/";
-const GRUPOS = {
-  clase:  { titulo: "Ejercicios de clase", carpeta: "Tema 1/Ejercicios clase/" },
-  tareas: { titulo: "Tareas",              carpeta: "Tema 1/Tareas/" }
-};
-const PRACTICAS = [
-  { g:"clase",  f:"ejemplo.html",          t:"Escribir en la página",      d:"Calcula 50 + 17 y lo escribe dentro de un párrafo con innerHTML.", tags:["innerHTML","DOM"] },
-  { g:"clase",  f:"ejemplo7.1.html",       t:"Cambiar un texto con un botón", d:"Un botón sustituye el contenido de un párrafo al pulsarlo.", tags:["onclick","innerHTML"] },
-  { g:"clase",  f:"ejemplo7.2.html",       t:"Cambio de imágenes",         d:"Al hacer clic en la imagen se alterna entre dos fotos distintas.", tags:["eventos","img.src"] },
-  { g:"clase",  f:"modificarTitulo.html",  t:"Modificar el título",        d:"Una función recibe el nuevo texto y lo aplica al título de la página.", tags:["funciones","textContent"] },
-  { g:"clase",  f:"pruebaDeEventos.html",  t:"Métodos de salida",          d:"Compara alert, console.log, document.write y la modificación del DOM.", tags:["alert","console","DOM"] },
-  { g:"tareas", f:"ejercicio1.html",       t:"Ejercicio 1: texto y título", d:"Dos botones cambian por separado el párrafo y el título.", tags:["innerHTML","funciones"] },
-  { g:"tareas", f:"ejercicio2.html",       t:"Ejercicio 2: secuencia de imágenes", d:"Cada clic muestra la siguiente imagen de una lista y vuelve a la primera al terminar.", tags:["arrays","eventos"] },
-  { g:"tareas", f:"ejercicio3.html",       t:"Ejercicio 3: test de JavaScript", d:"Siete frases de verdadero o falso; la frase se pinta de verde si aciertas y de rojo si fallas.", tags:["condicionales","style"] },
-  { g:"tareas", f:"ejercicio4.html",       t:"Ejercicio 4: mensaje por consola", d:"Un botón escribe un mensaje en la consola del navegador (F12).", tags:["console.log"] },
-  { g:"tareas", f:"ejercicio5.html",       t:"Ejercicio 5: mensajes de bienvenida", d:"Muestra el saludo en ruso, español o inglés, cada uno con su color.", tags:["funciones","style"] }
+/* ---------- Configuración ----------
+   Si la página está en GitHub Pages (usuario.github.io/repo) se detectan
+   usuario y repositorio solos. En cualquier otro sitio se usan estos valores. */
+const CFG = (() => {
+  const h = location.hostname, p = location.pathname.split("/").filter(Boolean);
+  if (h.endsWith(".github.io") && p[0]) return { owner: h.split(".")[0], repo: p[0] };
+  return { owner: "Blas968", repo: "DECLI" };
+})();
+const BRANCH   = "main";
+const API      = "https://api.github.com/repos/" + CFG.owner + "/" + CFG.repo;
+const REPO_URL = "https://github.com/" + CFG.owner + "/" + CFG.repo;
+const BLOB     = REPO_URL + "/blob/" + BRANCH + "/";
+const CLAVE    = "decli:" + CFG.owner + "/" + CFG.repo + ":";
+
+/* Lista guardada: se usa solo si no se puede consultar GitHub. */
+const RESPALDO = [
+  ["Tema 1/Ejercicios clase/ejemplo.html","Escribir en la página","Calcula 50 + 17 y lo escribe dentro de un párrafo con innerHTML.",["innerHTML"]],
+  ["Tema 1/Ejercicios clase/ejemplo7.1.html","Cambiar un texto con un botón","Un botón sustituye el contenido de un párrafo al pulsarlo.",["onclick","innerHTML"]],
+  ["Tema 1/Ejercicios clase/ejemplo7.2.html","Cambio de imágenes","Al hacer clic en la imagen se alterna entre dos fotos distintas.",["onclick","img.src"]],
+  ["Tema 1/Ejercicios clase/modificarTitulo.html","Modificar el título","Una función recibe el nuevo texto y lo aplica al título de la página.",["funciones","textContent"]],
+  ["Tema 1/Ejercicios clase/pruebaDeEventos.html","Métodos de salida","Compara alert, console.log, document.write y la modificación del DOM.",["alert","console.log","document.write"]],
+  ["Tema 1/Tareas/ejercicio1.html","Ejercicio 1: texto y título","Dos botones cambian por separado el párrafo y el título.",["innerHTML","funciones"]],
+  ["Tema 1/Tareas/ejercicio2.html","Ejercicio 2: secuencia de imágenes","Cada clic muestra la siguiente imagen de una lista y vuelve a la primera al terminar.",["arrays","onclick"]],
+  ["Tema 1/Tareas/ejercicio3.html","Ejercicio 3: test de JavaScript","Siete frases de verdadero o falso; se pintan de verde si aciertas y de rojo si fallas.",["condicionales","style"]],
+  ["Tema 1/Tareas/ejercicio4.html","Ejercicio 4: mensaje por consola","Un botón escribe un mensaje en la consola del navegador (F12).",["console.log"]],
+  ["Tema 1/Tareas/ejercicio5.html","Ejercicio 5: mensajes de bienvenida","Muestra el saludo en ruso, español o inglés, cada uno con su color.",["funciones","style"]]
 ];
 
+/* ---------- Utilidades ---------- */
 const $ = s => document.querySelector(s);
-const ruta = p => encodeURI(GRUPOS[p.g].carpeta + p.f);
-let filtro = "todo", texto = "";
+function el(tag, cls, txt){ const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+function almacen(nombre){
+  let s = null; try { s = window[nombre]; } catch (e) {}
+  return {
+    get(k){ try { return JSON.parse(s.getItem(CLAVE + k)); } catch (e) { return null; } },
+    set(k, v){ try { s.setItem(CLAVE + k, JSON.stringify(v)); } catch (e) {} }
+  };
+}
+const LS = almacen("localStorage"), SS = almacen("sessionStorage");
+const natural = (a, b) => a.localeCompare(b, "es", { numeric: true, sensitivity: "base" });
+const rutaWeb = path => encodeURI(path);
+const bonito = f => { const s = f.replace(/\.html?$/i, "").replace(/[-_]+/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2"); return s.charAt(0).toUpperCase() + s.slice(1); };
+const fecha = iso => new Date(iso).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
 
-function el(tag, cls, txt){ const e = document.createElement(tag); if(cls) e.className = cls; if(txt != null) e.textContent = txt; return e; }
+/* ---------- Lectura del repositorio ---------- */
+async function cargarRepo(){
+  const c = SS.get("arbol");
+  if (c && Date.now() - c.t < 180000) return c;               // 3 min de caché para no gastar peticiones
+  const h = { headers: { Accept: "application/vnd.github+json" } };
+  const r = await fetch(API + "/git/trees/" + encodeURIComponent(BRANCH) + "?recursive=1", h);
+  if (!r.ok) throw new Error("GitHub " + r.status);
+  const j = await r.json();
+  let ultimo = null;
+  try {
+    const rc = await fetch(API + "/commits?sha=" + encodeURIComponent(BRANCH) + "&per_page=1", h);
+    if (rc.ok) { const arr = await rc.json(); ultimo = arr[0] && arr[0].commit.committer.date; }
+  } catch (e) {}
+  const out = { t: Date.now(), ultimo, tree: j.tree.filter(n => n.type === "blob").map(n => ({ path: n.path, sha: n.sha })) };
+  SS.set("arbol", out);
+  return out;
+}
+
+async function leer(path){
+  const rel = rutaWeb(path);
+  try { const r = await fetch(rel); if (r.ok) return await r.text(); } catch (e) {}
+  const r2 = await fetch("https://raw.githubusercontent.com/" + CFG.owner + "/" + CFG.repo + "/" + BRANCH + "/" + rel);
+  if (!r2.ok) throw new Error("No se pudo leer " + path);
+  return r2.text();
+}
+
+/* Qué técnicas usa cada práctica, detectado en su código. */
+const DETECTAR = [
+  ["innerHTML",/innerHTML/], ["textContent",/textContent|innerText/], ["onclick",/onclick/],
+  ["eventos",/addEventListener|onchange|oninput|onmouse|onkey|onsubmit/], ["console.log",/console\.log/],
+  ["alert",/\balert\s*\(/], ["prompt",/\bprompt\s*\(/], ["document.write",/document\.write/],
+  ["arrays",/\.push\(|\.length|=\s*\[[^\]]*,[^\]]*\]/], ["condicionales",/\bif\s*\(|\bswitch\s*\(/],
+  ["bucles",/\bfor\s*\(|\bwhile\s*\(/], ["funciones",/function\s+\w+|=>/], ["style",/\.style\./],
+  ["img.src",/\.src\s*=/], ["fetch",/\bfetch\s*\(/], ["localStorage",/localStorage/]
+];
+const GENERICO = /^(document|mi p[aá]gina|untitled|sin t[ií]tulo|prueba)?$/i;
+
+function analizar(texto, file){
+  const doc = new DOMParser().parseFromString(texto, "text/html");
+  const t = (doc.title || "").trim();
+  const h = ((doc.querySelector("h1") || {}).textContent || "").trim();
+  const md = ((doc.querySelector('meta[name="description"]') || {}).content || "").trim();
+  const tags = DETECTAR.filter(([, re]) => re.test(texto)).map(([n]) => n).slice(0, 4);
+
+  let nombre;
+  if (GENERICO.test(t)) nombre = h || bonito(file);
+  else if (h && !t.toLowerCase().includes(h.toLowerCase()) && !h.toLowerCase().includes(t.toLowerCase())) nombre = t + ": " + h;
+  else nombre = t;
+
+  const p = Array.from(doc.querySelectorAll("p")).map(x => x.textContent.trim()).find(x => x.length > 12 && !/^\d+[.)]/.test(x));
+  const desc = md || p || (tags.length ? "Práctica con " + tags.join(", ") + "." : "Práctica en HTML.");
+  return { nombre, desc, tags };
+}
+
+async function metaDe(e){
+  const k = "meta2:" + e.sha;                                  // el sha cambia cuando cambia el archivo
+  const c = LS.get(k); if (c) return c;
+  const m = analizar(await leer(e.path), e.file);
+  LS.set(k, m); return m;
+}
+
+function entradaDe(path, sha){
+  const partes = path.split("/"), file = partes.pop();
+  return { path, sha, file, tema: partes[0] || "Otros", grupo: partes.slice(1).join(" / ") || "General" };
+}
+
+/* ---------- Pintar la lista ---------- */
+let LISTA = [], filtro = "todo", texto = "";
+
+function chips(){
+  const temas = [...new Set(LISTA.map(e => e.tema))].sort(natural);
+  if (filtro !== "todo" && !temas.includes(filtro)) filtro = "todo";
+  const c = $("#chips"); c.replaceChildren();
+  [["todo", "Todo"], ...temas.map(t => [t, t])].forEach(([v, txt]) => {
+    const b = el("button", "chip", txt); b.type = "button"; b.dataset.f = v; c.append(b);
+  });
+}
 
 function pintar(){
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.f === filtro));
   const cont = $("#lista"); cont.replaceChildren();
   const q = texto.trim().toLowerCase();
-  let total = 0;
-  for (const [id, g] of Object.entries(GRUPOS)){
-    if (filtro !== "todo" && filtro !== id) continue;
-    const items = PRACTICAS.filter(p => p.g === id && (p.f + p.t + p.d + p.tags.join(" ")).toLowerCase().includes(q));
-    if (!items.length) continue;
-    total += items.length;
-    const sec = el("section","group");
-    const h = el("h3",null,g.titulo); h.append(el("small",null,g.carpeta));
-    const ul = el("ul","rows");
-    for (const p of items){
-      const li = el("li","row"), info = el("div");
-      info.append(el("div","file",p.f), el("div","name",p.t), el("p","desc",p.d));
-      const tg = el("div","tags"); p.tags.forEach(x => tg.append(el("span",null,x))); info.append(tg);
-      const acts = el("div","acts");
-      const ver = el("button","btn main","Ver demo"); ver.type = "button"; ver.onclick = () => abrir(p);
-      const code = el("a","code","Código en GitHub"); code.href = REPO + ruta(p); code.target = "_blank"; code.rel = "noopener";
-      acts.append(ver, code);
-      li.append(info, acts); ul.append(li);
+  const vis = LISTA.filter(e => (filtro === "todo" || e.tema === filtro) &&
+    (e.path + " " + e.nombre + " " + e.desc + " " + e.tags.join(" ")).toLowerCase().includes(q));
+
+  const porTema = new Map();
+  vis.forEach(e => {
+    if (!porTema.has(e.tema)) porTema.set(e.tema, new Map());
+    const g = porTema.get(e.tema);
+    if (!g.has(e.grupo)) g.set(e.grupo, []);
+    g.get(e.grupo).push(e);
+  });
+
+  for (const tema of [...porTema.keys()].sort(natural)) {
+    const grupos = porTema.get(tema);
+    const total = [...grupos.values()].reduce((n, a) => n + a.length, 0);
+    const sec = el("section", "group");
+    const h3 = el("h3", null, tema); h3.append(el("small", null, total + (total === 1 ? " práctica" : " prácticas")));
+    sec.append(h3);
+    for (const g of [...grupos.keys()].sort(natural)) {
+      if (grupos.size > 1 || g !== "General") sec.append(el("h4", null, g));
+      const ul = el("ul", "rows");
+      grupos.get(g).sort((a, b) => natural(a.file, b.file)).forEach(p => {
+        const li = el("li", "row"), info = el("div");
+        info.append(el("div", "file", p.file), el("div", "name", p.nombre), el("p", "desc", p.desc));
+        if (p.tags.length) { const tg = el("div", "tags"); p.tags.forEach(x => tg.append(el("span", null, x))); info.append(tg); }
+        const acts = el("div", "acts");
+        const ver = el("button", "btn main", "Ver demo"); ver.type = "button"; ver.onclick = () => abrir(p);
+        const code = el("a", "code", "Código en GitHub"); code.href = BLOB + rutaWeb(p.path); code.target = "_blank"; code.rel = "noopener";
+        acts.append(ver, code); li.append(info, acts); ul.append(li);
+      });
+      sec.append(ul);
     }
-    sec.append(h, ul); cont.append(sec);
+    cont.append(sec);
   }
-  if (!total) cont.append(el("p","empty","No hay prácticas que coincidan con la búsqueda."));
-  $("#count").textContent = total + " de " + PRACTICAS.length + " prácticas";
+  if (!vis.length) cont.append(el("p", "empty", LISTA.length
+    ? "No hay prácticas que coincidan con la búsqueda."
+    : "Todavía no hay prácticas. Sube un archivo .html dentro de una carpeta del repositorio y aparecerá aquí."));
+  $("#count").textContent = vis.length + " de " + LISTA.length + " prácticas";
 }
 
 $("#q").addEventListener("input", e => { texto = e.target.value; pintar(); });
 $("#chips").addEventListener("click", e => {
-  const b = e.target.closest(".chip"); if(!b) return;
-  filtro = b.dataset.f;
-  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
-  pintar();
+  const b = e.target.closest(".chip"); if (!b) return;
+  filtro = b.dataset.f; pintar();
 });
 
-/* Visor con demo y código */
+/* ---------- Visor con demo y código ---------- */
 const dlg = $("#viewer"), frame = $("#frame"), pre = $("#src");
 let actual = null;
 function modo(codigo){
   $("#tabDemo").setAttribute("aria-selected", !codigo);
   $("#tabCode").setAttribute("aria-selected", codigo);
   frame.hidden = codigo; pre.hidden = !codigo;
-  if (codigo && actual && !pre.dataset.ok){
+  if (codigo && actual && !pre.dataset.ok) {
     pre.textContent = "Cargando código…";
-    fetch(ruta(actual)).then(r => { if(!r.ok) throw 0; return r.text(); })
+    leer(actual.path)
       .then(t => { pre.textContent = t; pre.dataset.ok = "1"; })
       .catch(() => { pre.textContent = "No se pudo cargar el código aquí. Ábrelo en GitHub con el enlace «Código en GitHub»."; });
   }
 }
 function abrir(p){
   actual = p; pre.dataset.ok = ""; pre.textContent = "";
-  $("#vt").textContent = p.t; frame.src = ruta(p);
+  $("#vt").textContent = p.nombre; frame.src = rutaWeb(p.path);
   modo(false); dlg.showModal();
 }
 $("#tabDemo").onclick = () => modo(false);
@@ -259,7 +368,7 @@ $("#close").onclick = () => dlg.close();
 dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
 dlg.addEventListener("close", () => { frame.src = "about:blank"; });
 
-/* Demo del hero: cambia el saludo igual que en el ejercicio 5 */
+/* ---------- Demo del hero ---------- */
 const saludo = $("#saludo"), linea = $("#linea"), langs = [...document.querySelectorAll("#langs button")];
 function decir(btn){
   langs.forEach(b => b.setAttribute("aria-pressed", b === btn));
@@ -272,11 +381,34 @@ function decir(btn){
 }
 let auto = null, i = 1;
 langs.forEach(b => b.addEventListener("click", () => { clearInterval(auto); decir(b); }));
-if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
   auto = setInterval(() => { i = (i + 1) % langs.length; decir(langs[i]); }, 3200);
 }
 
-pintar();
+/* ---------- Arranque ---------- */
+async function iniciar(){
+  document.querySelectorAll("[data-repo]").forEach(a => { a.href = REPO_URL; });
+  document.querySelectorAll("[data-repo-text]").forEach(a => { a.textContent = "github.com/" + CFG.owner + "/" + CFG.repo; });
+  const estado = $("#estado");
+  try {
+    const repo = await cargarRepo();
+    const nodos = repo.tree
+      .filter(n => /\.html?$/i.test(n.path) && !/^index\.html?$/i.test(n.path) && !n.path.split("/").some(s => s.startsWith(".")))
+      .slice(0, 200);
+    LISTA = nodos.map(n => entradaDe(n.path, n.sha));
+    await Promise.all(LISTA.map(async e => {
+      try { Object.assign(e, await metaDe(e)); }
+      catch (_) { Object.assign(e, { nombre: bonito(e.file), desc: "Práctica en HTML.", tags: [] }); }
+    }));
+    estado.textContent = "Esta lista se genera sola a partir del repositorio" + (repo.ultimo ? ". Último cambio: " + fecha(repo.ultimo) + "." : ".");
+  } catch (err) {
+    LISTA = RESPALDO.map(([path, nombre, desc, tags]) => Object.assign(entradaDe(path, ""), { nombre, desc, tags }));
+    estado.textContent = "No se pudo consultar GitHub, así que se muestra la lista guardada en la página. Los ejercicios nuevos aparecerán cuando la consulta funcione.";
+    estado.classList.add("aviso");
+  }
+  chips(); pintar();
+}
+iniciar();
 </script>
 </body>
 </html>
