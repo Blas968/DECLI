@@ -1,83 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boletín de Notas</title>
-    <link rel="stylesheet" href="estilos.css">
+    <style>
+        body { font-family: system-ui, Arial, sans-serif; background: #f1f5f9; color: #0f172a; margin: 0; padding: 24px 16px; }
+        h1 { max-width: 800px; margin: 0 auto 8px; font-size: 28px; }
+        h2 { margin: 0 0 16px; font-size: 24px; }
+        h3 { margin: 20px 0 12px; font-size: 20px; }
+        .tarjeta { background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 24px; max-width: 800px; margin: 20px auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+        th { background: #eff6ff; }
+        .aprobado { background: #dcfce7; color: #166534; }
+        .suspenso { background: #fee2e2; color: #991b1b; }
+        .fila { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+        label { font-weight: 600; }
+        input, select { font-size: 15px; padding: 8px; border: 1px solid #94a3b8; border-radius: 6px; }
+        select { background: #e5e7eb; }
+        button { font-size: 15px; padding: 8px 12px; border: none; border-radius: 6px; background: #1d4ed8; color: #fff; cursor: pointer; }
+        button:hover { background: #1e40af; }
+        pre { background: #0f172a; color: #e2e8f0; font-family: Consolas, monospace; font-size: 13px; padding: 16px; border-radius: 8px; margin: 0; white-space: pre-wrap; }
+    </style>
 </head>
 <body>
     <h1>Boletín de Notas de la clase</h1>
 
-    <div class="blanco">
+    <section class="tarjeta">
         <h2>Notas por trimestre</h2>
-        <table border="1">
-            <tr>
-                <th>Alumno</th>
-                <th>Trimestre 1</th>
-                <th>Trimestre 2</th>
-                <th>Trimestre 3</th>
-                <th>Media</th>
-                <th>Clasificación</th>
-            </tr>
-
-            <tr>
-                <td>Juan Pérez</td>
-                <td class="nota">8.5</td>
-                <td class="nota">9.0</td>
-                <td class="nota">7.5</td>
-                <td class="nota">8.3</td>
-                <td>Aprobado</td>
-            </tr>
-            <tr>
-                <td>María López</td>
-                <td class="nota">7.0</td>
-                <td class="nota">6.5</td>
-                <td class="nota">8.0</td>
-                <td class="nota">7.2</td>
-                <td>Aprobado</td>
-            </tr>
-            <tr>
-                <td>Carlos García</td>
-                <td class="nota">5.5</td>
-                <td class="nota">6.0</td>
-                <td class="nota">4.5</td>
-                <td class="nota">5.3</td>
-                <td>Suspenso</td>
-            </tr>
-            <tr>
-                <td>Ana Martínez</td>
-                <td class="nota">9.0</td>
-                <td class="nota">8.5</td>
-                <td class="nota">9.5</td>
-                <td class="nota">9.0</td>
-                <td>Aprobado</td>
-            </tr>
-            <tr>
-                <td>Pedro Sánchez</td>
-                <td class="nota">6.0</td>
-                <td class="nota">5.5</td>
-                <td class="nota">7.0</td>
-                <td class="nota">6.2</td>
-                <td>Aprobado</td>
-            </tr>
+        <table id="tablaNotas">
+            <thead>
+                <tr><th>Alumno</th><th>Trimestre 1</th><th>Trimestre 2</th><th>Trimestre 3</th><th>Media</th><th>Clasificación</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Juan Pérez</td><td class="nota">8.5</td><td class="nota">9.0</td><td class="nota">7.5</td><td class="nota"></td><td></td></tr>
+                <tr><td>María López</td><td class="nota">7.0</td><td class="nota">6.5</td><td class="nota">8.0</td><td class="nota"></td><td></td></tr>
+                <tr><td>Carlos García</td><td class="nota">5.5</td><td class="nota">6.0</td><td class="nota">4.5</td><td class="nota"></td><td></td></tr>
+                <tr><td>Ana Martínez</td><td class="nota">9.0</td><td class="nota">8.5</td><td class="nota">9.5</td><td class="nota"></td><td></td></tr>
+                <tr><td>Pedro Sánchez</td><td class="nota">6.0</td><td class="nota">5.5</td><td class="nota">7.0</td><td class="nota"></td><td></td></tr>
+            </tbody>
         </table>
-    </div>
+    </section>
 
-    <div class="blanco">
+    <section class="tarjeta">
         <h2>Añadir Alumno</h2>
-        <form action="añadirAlumno" method="post">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            <label for="trimestre1">Trimestre 1:</label>
-            <input type="number" id="trimestre1" name="trimestre1" min="0" max="10" step="0.1" required>
-            <label for="trimestre2">Trimestre 2:</label>
-            <input type="number" id="trimestre2" name="trimestre2" min="0" max="10" step="0.1" required>
-            <label for="trimestre3">Trimestre 3:</label>
-            <input type="number" id="trimestre3" name="trimestre3" min="0" max="10" step="0.1" required>
+        <form id="formAlumno">
+            <div class="fila">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" required>
+            </div>
+            <div class="fila">
+                <label for="t1">Trimestre 1:</label>
+                <input type="number" id="t1" min="0" max="10" step="0.1" required>
+                <label for="t2">Trimestre 2:</label>
+                <input type="number" id="t2" min="0" max="10" step="0.1" required>
+                <label for="t3">Trimestre 3:</label>
+                <input type="number" id="t3" min="0" max="10" step="0.1" required>
+            </div>
             <button type="submit">Añadir</button>
         </form>
-    </div>
+    </section>
+
+    <section class="tarjeta">
+        <h2>Consultas</h2>
+        <div class="fila">
+            <button id="btnAprobados">Contar aprobados</button>
+            <button id="btnMejor">Mejor nota de la clase</button>
+            <button id="btnMediaTrim">Media de un trimestre</button>
+            <select id="selectTrim">
+                <option value="0">1º trimestre</option>
+                <option value="1">2º trimestre</option>
+                <option value="2">3º trimestre</option>
+            </select>
+        </div>
+        <div class="fila">
+            <input type="text" id="buscarNombre" placeholder="Nombre del alumno">
+            <button id="btnBuscar">Buscar alumno</button>
+        </div>
+        <h3>Resultado</h3>
+        <pre id="resultado">Pulsa una consulta para ver el resultado.</pre>
+    </section>
+
+    <script>
+        const cuerpo = document.querySelector("#tablaNotas tbody");
+        const mostrar = (texto) => document.querySelector("#resultado").textContent = texto;
+
+        const promedio = (notas) => notas.reduce((a, b) => a + b, 0) / notas.length;
+        const clasificar = (m) => m >= 9 ? "Sobresaliente" : m >= 7 ? "Notable" : m >= 6 ? "Bien" : m >= 5 ? "Aprobado" : "Suspenso";
+        const colorear = (td) => td.className = "nota " + (parseFloat(td.textContent) >= 5 ? "aprobado" : "suspenso");
+
+        // Lee la tabla y devuelve los datos de cada alumno
+        const leerAlumnos = () => [...cuerpo.rows].map((fila, i) => {
+            const notas = [1, 2, 3].map((j) => parseFloat(fila.cells[j].textContent));
+            return { nombre: fila.cells[0].textContent, notas, media: promedio(notas), posicion: i + 1 };
+        });
+
+        // Rellena la media y la clasificación de una fila y colorea sus notas
+        const actualizarFila = (fila, media) => {
+            fila.cells[4].textContent = media.toFixed(1);
+            fila.cells[5].textContent = clasificar(media);
+            fila.querySelectorAll(".nota").forEach(colorear);
+        };
+
+        leerAlumnos().forEach((a, i) => actualizarFila(cuerpo.rows[i], a.media));
+
+        // ----- Añadir alumno -----
+        document.querySelector("#formAlumno").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const notas = ["t1", "t2", "t3"].map((id) => parseFloat(document.querySelector("#" + id).value));
+            const fila = document.createElement("tr");
+            fila.innerHTML = "<td></td>" + notas.map((n) => `<td class="nota">${n.toFixed(1)}</td>`).join("") + '<td class="nota"></td><td></td>';
+            fila.cells[0].textContent = document.querySelector("#nombre").value.trim();
+            cuerpo.appendChild(fila);
+            actualizarFila(fila, promedio(notas));
+            e.target.reset();
+        });
+
+        // ----- Consultas -----
+        document.querySelector("#btnAprobados").addEventListener("click", () => {
+            const alumnos = leerAlumnos();
+            mostrar(`Alumnos aprobados: ${alumnos.filter((a) => a.media >= 5).length} de ${alumnos.length}`);
+        });
+
+        document.querySelector("#btnMejor").addEventListener("click", () => {
+            const alumnos = leerAlumnos();
+            if (!alumnos.length) return mostrar("No hay alumnos en la tabla.");
+            const mejor = alumnos.reduce((a, b) => b.media > a.media ? b : a);
+            mostrar(`Mejor media de la clase: ${mejor.nombre}\nMedia: ${mejor.media.toFixed(2)} (${clasificar(mejor.media)})`);
+        });
+
+        document.querySelector("#btnMediaTrim").addEventListener("click", () => {
+            const select = document.querySelector("#selectTrim");
+            const alumnos = leerAlumnos();
+            if (!alumnos.length) return mostrar("No hay alumnos en la tabla.");
+            const media = promedio(alumnos.map((a) => a.notas[select.value]));
+            mostrar(`Media del ${select.selectedOptions[0].text}: ${media.toFixed(2)}`);
+        });
+
+        const buscar = () => {
+            const texto = document.querySelector("#buscarNombre").value.trim().toLowerCase();
+            const a = texto && leerAlumnos().find((x) => x.nombre.toLowerCase().includes(texto));
+            mostrar(a
+                ? `${a.nombre} está en la posición ${a.posicion}\nNotas: ${a.notas.join(", ")}\nMedia: ${a.media.toFixed(2)} (${clasificar(a.media)})`
+                : "No se ha encontrado ningún alumno con ese nombre.");
+        };
+        document.querySelector("#btnBuscar").addEventListener("click", buscar);
+        document.querySelector("#buscarNombre").addEventListener("keydown", (e) => e.key === "Enter" && buscar());
+    </script>
 </body>
-    <script src="script.js"></script>
 </html>
