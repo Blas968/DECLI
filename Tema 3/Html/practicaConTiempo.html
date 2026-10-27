@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Reloj</h1>
+    <p id="hora"></p>
+    <button id="parar">Parar</button>
+    <button id="reanudar">Reanudar</button>
+
+    <script>
+        const horaElemento = document.getElementById('hora');
+        const botonParar = document.getElementById('parar');
+        const botonReanudar = document.getElementById('reanudar');
+
+        let timerId;
+
+        function actualizarHora() {
+            horaElemento.textContent = new Date().toLocaleTimeString('es-ES');
+        }
+
+        function iniciarReloj() {
+            actualizarHora();
+            timerId = setInterval(actualizarHora, 1000);
+        }
+
+        botonParar.addEventListener('click', () => {
+            if (timerId) {
+                clearInterval(timerId);
+                timerId = null;
+            }
+        });
+
+        botonReanudar.addEventListener('click', () => {
+            if (!timerId) {
+                iniciarReloj();
+            }
+        });
+
+        iniciarReloj();
+    </script>
+</body>
+</html>
