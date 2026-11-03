@@ -188,7 +188,7 @@ const CLAVE    = "decli:" + CFG.owner + "/" + CFG.repo + ":";
 
 /* Lista guardada: último recurso si no se puede leer ni indice.json ni GitHub. */
 const RESPALDO = [
-  ["Tema 1/Ejercicios clase/boletinNotas.html","Boletín de Notas","Práctica en HTML.",[]],
+  ["Tema 1/Ejercicios clase/boletinNotas.html","Boletín de Notas","Práctica con innerHTML, textContent, eventos, arrays.",["innerHTML", "textContent", "eventos", "arrays"]],
   ["Tema 1/Ejercicios clase/ejemplo.html","Ejemplo","Práctica con innerHTML.",["innerHTML"]],
   ["Tema 1/Ejercicios clase/ejemplo7.1.html","Modificando el código HTML","Modificando el contenido.",["innerHTML", "onclick"]],
   ["Tema 1/Ejercicios clase/ejemplo7.2.html","Cambio de imágenes con JavaScript","Haz click sobre la imagen para cambiarla.",["onclick", "condicionales", "funciones", "img.src"]],
@@ -205,7 +205,8 @@ const RESPALDO = [
   ["Tema 1/Tareas/ejercicio2.html","Ejercicio 2: Secuencia de imágenes","Haz clic sobre la imagen para ver la siguiente.",["onclick", "arrays", "condicionales", "funciones"]],
   ["Tema 1/Tareas/ejercicio3.html","Ejercicio 3: Test de JavaScript","Práctica con onclick, condicionales, funciones, style.",["onclick", "condicionales", "funciones", "style"]],
   ["Tema 1/Tareas/ejercicio4.html","Ejercicio 4: Mensaje por consola","Abre la consola con F12 para ver el mensaje.",["onclick", "console.log", "funciones"]],
-  ["Tema 1/Tareas/ejercicio5.html","Ejercicio 5: Mensajes de bienvenida","Práctica con innerHTML, onclick, funciones, style.",["innerHTML", "onclick", "funciones", "style"]]
+  ["Tema 1/Tareas/ejercicio5.html","Ejercicio 5: Mensajes de bienvenida","Práctica con innerHTML, onclick, funciones, style.",["innerHTML", "onclick", "funciones", "style"]],
+  ["Tema 3/Html/practicaConTiempo.html","Reloj","Práctica con textContent, eventos, condicionales, funciones.",["textContent", "eventos", "condicionales", "funciones"]]
 ];
 
 /* ---------- Utilidades ---------- */
@@ -242,13 +243,22 @@ async function cargarRepo(){
   return out;
 }
 
-/* indice.json lo genera el workflow de GitHub en cada publicación (sin límites de consultas). */
+/* El workflow guarda indice.json en la rama "indice" en cada push (sin límite de consultas de la API).
+   Si no existe, se prueba el indice.json publicado junto a la web. */
 async function cargarIndice(){
-  const r = await fetch("indice.json", { cache: "no-store" });
-  if (!r.ok) throw new Error("indice.json " + r.status);
-  const j = await r.json();
-  if (!j || !Array.isArray(j.practicas)) throw new Error("indice.json no válido");
-  return j;
+  const fuentes = [
+    "https://raw.githubusercontent.com/" + CFG.owner + "/" + CFG.repo + "/indice/indice.json",
+    "indice.json"
+  ];
+  for (const u of fuentes) {
+    try {
+      const r = await fetch(u, { cache: "no-store" });
+      if (!r.ok) continue;
+      const j = await r.json();
+      if (j && Array.isArray(j.practicas)) return j;
+    } catch (e) {}
+  }
+  throw new Error("no hay indice.json");
 }
 
 async function leer(path){
@@ -443,7 +453,7 @@ async function iniciar(){
       // 3) Lista guardada en la propia página
       motivo = /403|429/.test(e2.message) ? "GitHub limita las consultas desde esta red" : (e2.message || "sin conexión");
       LISTA = RESPALDO.map(([path, nombre, desc, tags]) => Object.assign(entradaDe(path, ""), { nombre, desc, tags }));
-      estado.textContent = "Se muestra la lista guardada en la página, que puede estar desactualizada (" + motivo + "). Los ejercicios nuevos aparecerán cuando se publique la web con el workflow.";
+      estado.textContent = "Se muestra la lista guardada en la página, que puede estar desactualizada (" + motivo + "). Revisa en la pestaña Actions de GitHub que el workflow «Publicar web» esté en verde.";
       estado.classList.add("aviso");
     }
   }
