@@ -1,0 +1,199 @@
+{
+  "ultimo": "2026-11-06T08:51:20+01:00",
+  "practicas": [
+    {
+      "path": "Tema 1/Ejercicios clase/boletinNotas.html",
+      "nombre": "Boletín de Notas",
+      "desc": "Práctica con innerHTML, textContent, eventos, arrays.",
+      "tags": [
+        "innerHTML",
+        "textContent",
+        "eventos",
+        "arrays"
+      ]
+    },
+    {
+      "path": "Tema 1/Ejercicios clase/ejemplo.html",
+      "nombre": "Ejemplo",
+      "desc": "Práctica con innerHTML.",
+      "tags": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "Tema 1/Ejercicios clase/ejemplo7.1.html",
+      "nombre": "Modificando el código HTML",
+      "desc": "Modificando el contenido.",
+      "tags": [
+        "innerHTML",
+        "onclick"
+      ]
+    },
+    {
+      "path": "Tema 1/Ejercicios clase/ejemplo7.2.html",
+      "nombre": "Cambio de imágenes con JavaScript",
+      "desc": "Haz click sobre la imagen para cambiarla.",
+      "tags": [
+        "onclick",
+        "condicionales",
+        "funciones",
+        "img.src"
+      ]
+    },
+    {
+      "path": "Tema 1/Ejercicios clase/modificarTitulo.html",
+      "nombre": "Modificar título de la página",
+      "desc": "Práctica con textContent, onclick, funciones.",
+      "tags": [
+        "textContent",
+        "onclick",
+        "funciones"
+      ]
+    },
+    {
+      "path": "Tema 1/Ejercicios clase/notas-simple.html",
+      "nombre": "Boletín de notas de la clase",
+      "desc": "Práctica con innerHTML, onclick, arrays, condicionales.",
+      "tags": [
+        "innerHTML",
+        "onclick",
+        "arrays",
+        "condicionales"
+      ]
+    },
+    {
+      "path": "Tema 1/Ejercicios clase/pruebaDeEventos.html",
+      "nombre": "Métodos de salida en JavaScript",
+      "desc": "Práctica con textContent, onclick, console.log, alert.",
+      "tags": [
+        "textContent",
+        "onclick",
+        "console.log",
+        "alert"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/ActividadPropuesta2.1.html",
+      "nombre": "Actividad Propuesta2.1",
+      "desc": "Práctica con condicionales, funciones.",
+      "tags": [
+        "condicionales",
+        "funciones"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/ActividadPropuesta2.2.html",
+      "nombre": "Actividad Propuesta2.2",
+      "desc": "Práctica con onclick, console.log.",
+      "tags": [
+        "onclick",
+        "console.log"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/EjerciciosResueltos1.html",
+      "nombre": "Ejercicios Resueltos1",
+      "desc": "Práctica con funciones.",
+      "tags": [
+        "funciones"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/EjerciciosResueltos2.html",
+      "nombre": "Ejercicios Resueltos2",
+      "desc": "Práctica con prompt.",
+      "tags": [
+        "prompt"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/EjerciciosResueltos3.html",
+      "nombre": "Ejercicios Resueltos3",
+      "desc": "Práctica con console.log.",
+      "tags": [
+        "console.log"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/ejemplo_evento_atributo.html",
+      "nombre": "Tema 2 - Eventos con 'on...'",
+      "desc": "Práctica con textContent, onclick, eventos, console.log.",
+      "tags": [
+        "textContent",
+        "onclick",
+        "eventos",
+        "console.log"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/ejercicio1.html",
+      "nombre": "Ejercicio 1: Título original",
+      "desc": "Práctica con innerHTML, onclick, funciones.",
+      "tags": [
+        "innerHTML",
+        "onclick",
+        "funciones"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/ejercicio2.html",
+      "nombre": "Ejercicio 2: Secuencia de imágenes",
+      "desc": "Haz clic sobre la imagen para ver la siguiente.",
+      "tags": [
+        "onclick",
+        "arrays",
+        "condicionales",
+        "funciones"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/ejercicio3.html",
+      "nombre": "Ejercicio 3: Test de JavaScript",
+      "desc": "Práctica con onclick, condicionales, funciones, style.",
+      "tags": [
+        "onclick",
+        "condicionales",
+        "funciones",
+        "style"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/ejercicio4.html",
+      "nombre": "Ejercicio 4: Mensaje por consola",
+      "desc": "Abre la consola con F12 para ver el mensaje.",
+      "tags": [
+        "onclick",
+        "console.log",
+        "funciones"
+      ]
+    },
+    {
+      "path": "Tema 1/Tareas/ejercicio5.html",
+      "nombre": "Ejercicio 5: Mensajes de bienvenida",
+      "desc": "Práctica con innerHTML, onclick, funciones, style.",
+      "tags": [
+        "innerHTML",
+        "onclick",
+        "funciones",
+        "style"
+      ]
+    },
+    {
+      "path": "Tema 3/Html/practicaConTiempo.html",
+      "nombre": "Reloj",
+      "desc": "Práctica con textContent, eventos, condicionales, funciones.",
+      "tags": [
+        "textContent",
+        "eventos",
+        "condicionales",
+        "funciones"
+      ]
+    },
+    {
+      "path": "Tema 3/incidencias/index.html",
+      "nombre": "Incidencias del aula",
+      "desc": "Práctica en HTML.",
+      "tags": []
+    }
+  ]
+}
