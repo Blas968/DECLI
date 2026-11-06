@@ -25,7 +25,9 @@ class Incidencia {
     // TODO RETO 3: añade "hace X min" con this.minutos()
     html += "<p class='meta'>Hace " + this.minutos() + " min</p>";
     // TODO RETO 1: si NO está resuelta, añade el botón:
-    //   "<button type='button' onclick='resolver(" + this.id + ")'>Resolver</button>"
+    if (!this.resuelta) {
+      html += "<button type='button' onclick='resolver(" + this.id + ")'>Resolver</button>";
+    }
     html += "</article>";
     return html;
   }
